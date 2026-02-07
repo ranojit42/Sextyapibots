@@ -1,0 +1,38 @@
+<!-- panel.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>VIP Bot Panel</title>
+  <style>
+    body { background: linear-gradient(135deg,#0a0a0a,#1a1a2e); font-family: 'Arial Black', Arial, sans-serif; color: #00ffff; text-align:center; }
+    /* ... all your existing styles ... */
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🤖 SEXTY TG VIP BOT COLLECTION</h1>
+    <p>All Bot Details in Full Mega VIP Look</p>
+  </div>
+
+  <!-- Optional: You can use JS to fetch /api/bots and render dynamically -->
+  <script>
+    fetch('/api/bots')
+      .then(res => res.json())
+      .then(bots => {
+        const container = document.body;
+        bots.forEach(bot => {
+          const div = document.createElement('div');
+          div.className = 'bot-card';
+          div.innerHTML = `
+            <h2>${bot.name}</h2>
+            <p><b>Username:</b> <a href="https://t.me/${bot.username.slice(1)}" target="_blank" style="color:${bot.color}">${bot.username}</a></p>
+            <p>${bot.description.replace(/\n/g,'<br>')}</p>
+            <p><b>Commands:</b></p>
+            ${bot.commands.map(cmd => `<a href="https://t.me/${bot.username.slice(1)}?start=${cmd.slice(1)}" target="_blank"><span class="command">${cmd}</span></a>`).join('')}
+          `;
+          container.appendChild(div);
+        });
+      });
+  </script>
+</body>
+</html>
